@@ -22,6 +22,9 @@ class TaskListCreateAPIView(APIView):
             '#636363', '#a2ab58', '#C6FFDD', '#f7797d', '#FBD786', '#b91d73',
             '#1a2a6c', '#fdbb2d', '#200122', '#614385'
         ]
+        if data['current_color'] in colors:
+            # ensure color isn't repeated
+            colors.remove(data['current_color'])
 
         if data['task'] == 'START':
             server_count = randrange(10, 21)
@@ -54,12 +57,13 @@ class TaskListCreateAPIView(APIView):
 
         elif data['task'] == 'REPORT':
             latest_start_task = Task.objects.filter(task='START').first()
-            task = Task.objects.create(task=data['task'],
-                                       time=data['time'],
-                                       actual_time=data['actual_time'],
-                                       servers=latest_start_task.online_servers,
-                                       color=choice(colors),
-                                       priority=3)
+            task = Task.objects.create(
+                task=data['task'],
+                time=data['time'],
+                actual_time=data['actual_time'],
+                servers=latest_start_task.online_servers,
+                color=choice(colors),
+                priority=3)
             serializer = TaskSerializer(task)
             return Response(serializer.data, status=HTTP_201_CREATED)
 
@@ -93,4 +97,3 @@ class TaskListCreateAPIView(APIView):
     # sort by priority
     def take_priority(self, element):
         return element['priority']
-
