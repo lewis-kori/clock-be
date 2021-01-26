@@ -80,4 +80,4 @@ class Task(CommonInfo):
     def message(self):
         if self.task != 'REPORT':
             return f'{self.task.lower()} {self.servers} servers.'
-        return f'Report {self.online_servers} servers running.'
+        return f'Report {self.servers} servers running.'

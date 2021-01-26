@@ -53,9 +53,11 @@ class TaskListCreateAPIView(APIView):
                 return Response(serializer.data, status=HTTP_201_CREATED)
 
         elif data['task'] == 'REPORT':
+            latest_start_task = Task.objects.filter(task='START').first()
             task = Task.objects.create(task=data['task'],
                                        time=data['time'],
                                        actual_time=data['actual_time'],
+                                       servers=latest_start_task.online_servers,
                                        color=choice(colors),
                                        priority=3)
             serializer = TaskSerializer(task)
