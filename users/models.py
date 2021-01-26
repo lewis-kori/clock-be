@@ -75,3 +75,9 @@ class Task(CommonInfo):
             started_servers = [server['servers'] for server in start_tasks.values('servers')]
             return sum(started_servers)
         return 0
+
+    @property
+    def message(self):
+        if self.task != 'REPORT':
+            return f'{self.task.lower()} {self.servers} servers.'
+        return f'Report {self.online_servers} servers running.'
