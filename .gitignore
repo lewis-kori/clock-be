@@ -1,5 +1,6 @@
 # code editor config
 *.vscode
+*.code-workspace
 
 # python files
 *.pyc
@@ -9,3 +10,6 @@ db.sqlite3
 
 # environment variables
 .env
+
+# mac config
+*.DS_Store
